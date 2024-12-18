@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Reports Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .form-container, .report-container {
+            margin: 20px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2, .report-container h2 {
+            margin-top: 0;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Daily Reports Dashboard</h1>
+    </header>
+    <main>
+        <!-- Form for data entry -->
+        <div class="form-container">
+            <h2>Add Daily Report</h2>
+            <form id="reportForm">
+                <label for="timestamp">Timestamp:</label>
+                <input type="datetime-local" id="timestamp" required>
+
+                <label for="shift">Shift:</label>
+                <select id="shift" required>
+                    <option value="Shift 1">Shift 1</option>
+                    <option value="Shift 2">Shift 2</option>
+                    <option value="Shift 3">Shift 3</option>
+                </select>
+
+                <label for="availability">Person Availability (Leave):</label>
+                <input type="text" id="availability" placeholder="Enter availability info" required>
+
+                <label for="centrifuge">Centrifuge Disc Change Time:</label>
+                <input type="time" id="centrifuge" required>
+
+                <label for="temperature">Condenser Temperature:</label>
+                <input type="number" id="temperature" placeholder="Enter temperature in °C" required>
+
+                <label for="scrubber">Acid Scrubber Last Change Time:</label>
+                <input type="datetime-local" id="scrubber" required>
+
+                <label for="comments">Comments:</label>
+                <textarea id="comments" rows="4" placeholder="Additional comments..."></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Display reports -->
+        <div class="report-container">
+            <h2>Daily Reports</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Shift</th>
+                        <th>Availability</th>
+                        <th>Centrifuge Disc Time</th>
+                        <th>Condenser Temp (°C)</th>
+                        <th>Scrubber Change Time</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                    <!-- Reports will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        const reportForm = document.getElementById('reportForm');
+        const reportTableBody = document.getElementById('reportTableBody');
+
+        reportForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const timestamp = document.getElementById('timestamp').value;
+            const shift = document.getElementById('shift').value;
+            const availability = document.getElementById('availability').value;
+            const centrifuge = document.getElementById('centrifuge').value;
+            const temperature = document.getElementById('temperature').value;
+            const scrubber = document.getElementById('scrubber').value;
+            const comments = document.getElementById('comments').value;
+
+            // Create a new row for the table
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${timestamp}</td>
+                <td>${shift}</td>
+                <td>${availability}</td>
+                <td>${centrifuge}</td>
+                <td>${temperature}</td>
+                <td>${scrubber}</td>
+                <td>${comments}</td>
+            `;
+
+            // Append the row to the table
+            reportTableBody.appendChild(newRow);
+
+            // Reset the form
+            reportForm.reset();
+        });
+    </script>
+</body>
+</html>
